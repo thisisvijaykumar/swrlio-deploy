@@ -52,33 +52,49 @@ var MovieCtrl = (function () {
     function MovieCtrl() {
     }
     MovieCtrl.getAllMovies = function (req, res) {
-        var _a, _b, _c, _d;
+        var _a, _b, _c, _d, _e, _f, _g, _h;
         return __awaiter(this, void 0, void 0, function () {
-            var data, error_1;
-            return __generator(this, function (_e) {
-                switch (_e.label) {
+            var data, options, error_1;
+            return __generator(this, function (_j) {
+                switch (_j.label) {
                     case 0:
-                        _e.trys.push([0, 2, , 3]);
+                        _j.trys.push([0, 5, , 6]);
                         console.log("api call");
-                        return [4, movie_service_1.default.getAllMovies({
-                                limit: (_a = req.query.limit) !== null && _a !== void 0 ? _a : 50,
-                                query: (_b = req.query.query) !== null && _b !== void 0 ? _b : "",
-                                order: (_c = req.query.order) !== null && _c !== void 0 ? _c : "ASC",
-                                start: (_d = req.query.start) !== null && _d !== void 0 ? _d : 0,
-                            })];
+                        data = void 0;
+                        if (!req["user_id"]) return [3, 2];
+                        options = {
+                            limit: (_a = req.query.limit) !== null && _a !== void 0 ? _a : 50,
+                            query: (_b = req.query.query) !== null && _b !== void 0 ? _b : "",
+                            order: (_c = req.query.order) !== null && _c !== void 0 ? _c : "ASC",
+                            start: (_d = req.query.start) !== null && _d !== void 0 ? _d : 0,
+                            user_id: req["user_id"],
+                        };
+                        console.log(req.query, "api films call");
+                        return [4, movie_service_1.default.getMoviesWithUserRating(options)];
                     case 1:
-                        data = _e.sent();
+                        data = _j.sent();
+                        return [3, 4];
+                    case 2: return [4, movie_service_1.default.getAllMovies({
+                            limit: (_e = req.query.limit) !== null && _e !== void 0 ? _e : 50,
+                            query: (_f = req.query.query) !== null && _f !== void 0 ? _f : "",
+                            order: (_g = req.query.order) !== null && _g !== void 0 ? _g : "ASC",
+                            start: (_h = req.query.start) !== null && _h !== void 0 ? _h : 0,
+                        })];
+                    case 3:
+                        data = _j.sent();
+                        _j.label = 4;
+                    case 4:
                         res.status(200).send(__assign(__assign({}, data), { msg: "Successfully retreived movies" }));
-                        return [3, 3];
-                    case 2:
-                        error_1 = _e.sent();
+                        return [3, 6];
+                    case 5:
+                        error_1 = _j.sent();
                         res.status(400).send({
                             code: 400,
                             msg: "Something went wrong",
                             error: error_1,
                         });
-                        return [3, 3];
-                    case 3: return [2];
+                        return [3, 6];
+                    case 6: return [2];
                 }
             });
         });
